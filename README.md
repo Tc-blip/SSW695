@@ -1,4 +1,3 @@
-# SSW695
 Shopping Expert
 ==
 INTRODUCTION 
