@@ -11,7 +11,7 @@ An offline shopping store recommendation software. We would like to display brie
 ![](https://github.com/Tc-blip/SSW695/blob/master/pic/interface.png)
 
 
-Structure
+Contents
 --
 ├── Readme.md                   
 ├── Document                             
