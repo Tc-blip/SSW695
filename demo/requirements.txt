@@ -1,0 +1,10 @@
+
+python:
+flask
+flask-restful
+
+
+mysql 
+connector/python 8.0.18
+mysql server
+mysql workbench
