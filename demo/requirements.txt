@@ -5,6 +5,6 @@ flask-restful
 
 
 mysql 
-connector/python 8.0.18
+connector/python 8.0.18  #pip install mysql-connector-python==8.0.17
 mysql server
 mysql workbench
