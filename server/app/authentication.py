@@ -15,6 +15,12 @@ def hello():
     name = request.args.get("name", "World")
     return f'Hello, {escape(name)}!'
 
+@app.route("/login", methods=("GET", "POST"))
+def login():
+
+
+    return "login successful"
+
 
 @app.route("/register", methods=("GET", "POST"))
 def register():
@@ -25,6 +31,8 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        gender = request.form["gender"]
+        birthday = request.form['birthday']
 
         db = db1.cursor()
         
@@ -35,8 +43,8 @@ def register():
 
         else:
             db.execute(
-                "INSERT INTO user (username, password) VALUES (%s, %s)",
-                (username, password),
+                "INSERT INTO user (username, password) VALUES (%s, %s,%s,%s)",
+                (username, password,gender,birthday),
             )
             db1.commit()
 
