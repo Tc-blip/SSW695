@@ -4,7 +4,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint('auth', __name__, url_prefix='/auth_user')
 
 db1 = mysql.connector.connect(user='root', password='tiancheng',
                         host='127.0.0.1',
@@ -75,9 +75,10 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = db.execute(
-            'SELECT * FROM user WHERE id = ?', (user_id,)
-        ).fetchone()
+        db.execute(
+            'SELECT * FROM user WHERE UserID = %s', (user_id,)
+        )
+        g.user = db.fetchone()
 
 @bp.route("/logout",methods=("GET", "POST"))
 def logout():
