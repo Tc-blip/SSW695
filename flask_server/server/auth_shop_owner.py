@@ -4,7 +4,8 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-bp = Blueprint('auth', __name__, url_prefix='/auth_user')
+
+bp = Blueprint('auth_shop_owner', __name__,url_prefix='/auth_shop_owner')
 
 db1 = mysql.connector.connect(user='root', password='tiancheng',
                         host='127.0.0.1',
@@ -12,7 +13,7 @@ db1 = mysql.connector.connect(user='root', password='tiancheng',
 
 @bp.route('/')
 def hello():
-    return 'Hello, auth world!'
+    return 'Hello, owner world!'
 
 @bp.route("/register", methods=("GET", "POST"))
 def register():

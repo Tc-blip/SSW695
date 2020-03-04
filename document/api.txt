@@ -1,0 +1,10 @@
+method
+Get     http://127.0.0.1:5000/auth_user/                  hello, auth world
+post    http://127.0.0.1:5000/auth_user/login             login successful
+post    http://127.0.0.1:5000/auth_user/logout            log out    
+post    http://127.0.0.1:5000/auth_user/register  
+
+Get     http://127.0.0.1:5000/auth_shop_owner/            Hello, owner world!
+post    http://127.0.0.1:5000/auth_shop_owner/login       login successful
+post    http://127.0.0.1:5000/auth_shop_owner/logout      log out    
+post    http://127.0.0.1:5000/auth_shop_owner/register  

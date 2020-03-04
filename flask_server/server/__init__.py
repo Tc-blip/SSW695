@@ -30,7 +30,7 @@ def create_app(test_config=None):
     from . import auth
     app.register_blueprint(auth.bp)
 
-    from . import business
-    app.register_blueprint(business.bp)
+    from . import auth_shop_owner
+    app.register_blueprint(auth_shop_owner.bp)
 
     return app
