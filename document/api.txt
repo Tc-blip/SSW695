@@ -20,3 +20,11 @@ request body = (password, gender, birthday)
 Get     http://127.0.0.1:5000/user/get_user_fav
 POST    http://127.0.0.1:5000/user/set_user_fav
 request body ?
+
+
+GET     http://127.0.0.1:5000/shop_owner/get_user_infor           return json   for example{ {"ShopOwnerId": 123,
+                                                                                        "UserName": tc,
+                                                                                        "CreateTime":,
+                                                                                        "Gender": 2020-03-01,
+                                                                                        "Birthday": 2020-03-01}
+POST    http://127.0.0.1:5000/shop_owner/set_user_infor           "change successful" or "error"
