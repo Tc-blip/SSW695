@@ -27,19 +27,19 @@ def register():
         gender = request.form["gender"]
         birthday = request.form['birthday']
         db = db1.cursor()
-        db.execute("SELECT Username FROM user WHERE Username = %s", (username,))
+        db.execute("SELECT Username FROM storeowner WHERE Username = %s", (username,))
         res = db.fetchone()
         if (res is not None ):
             return "User {0} is already registered.".format(username)
 
         else:
             db.execute(
-                "INSERT INTO user (username, password,Gendar, Birthday) VALUES (%s, %s,%s,%s)",
+                "INSERT INTO storeowner (username, password,Gender, Birthday) VALUES (%s, %s,%s,%s)",
                 (username, generate_password_hash(password),gender,birthday),
             )
             db1.commit()
 
-            return "successful"
+            return "successful store owner register"
     else:
         return "register no Get"
 
@@ -51,7 +51,7 @@ def login():
         db = db1.cursor()
 
         error = None
-        db.execute('SELECT * FROM user WHERE Username = %s', (username,))
+        db.execute('SELECT * FROM storeowner WHERE Username = %s', (username,))
         user = db.fetchone()
 
         if user is None:
@@ -77,7 +77,7 @@ def load_logged_in_user():
         g.user = None
     else:
         db.execute(
-            'SELECT * FROM user WHERE UserID = %s', (user_id,)
+            'SELECT * FROM storeowner WHERE StoreOwnerId = %s', (user_id,)
         )
         g.user = db.fetchone()
 

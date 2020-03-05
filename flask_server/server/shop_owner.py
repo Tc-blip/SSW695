@@ -4,16 +4,16 @@ from flask import (
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
-bp = Blueprint('user', __name__, url_prefix='/user')
+bp = Blueprint('shop_owner', __name__, url_prefix='/shop_owner')
 
 db1 = mysql.connector.connect(user='root', password='tiancheng',
                         host='127.0.0.1',
                         database='mydb')
 
-@bp.route('/get_user_infor')
+@bp.route('/get_shop_owner_infor')
 def get_user_infor():
     if g.user:
-        dict = {"UserID": g.user[0],
+        dict = {"StoreOwnerId": g.user[0],
                 "UserName": g.user[1],
                 "CreateTime":g.user[3],
                 "Gender": g.user[4],
@@ -24,7 +24,7 @@ def get_user_infor():
     else:
         return "error"
 
-@bp.route('/set_user_infor',methods=("GET","POST"))
+@bp.route('/set_shop_owner_infor',methods=("GET","POST"))
 def set_user_infor():
     if request.method == 'POST':
         username = g.user[0]
@@ -32,7 +32,7 @@ def set_user_infor():
         gender = request.form["gender"]
         birthday = request.form['birthday']
         db = db1.cursor(dictionary=True)
-        db.execute("UPDATE user SET password=%s,Gendar=%s,Birthday=%s Where UserID = %s",(generate_password_hash(password),gender,birthday,username,))
+        db.execute("UPDATE storeowner SET password=%s,Gender=%s,Birthday=%s Where StoreOwnerId = %s",(generate_password_hash(password),gender,birthday,username,))
         db1.commit()
         return "change successful"
     
