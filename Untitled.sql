@@ -1,0 +1,1 @@
+insert into mydb.store (user_UserId,store_StoreId)values(1,1);
