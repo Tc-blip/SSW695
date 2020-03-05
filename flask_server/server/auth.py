@@ -71,7 +71,7 @@ def login():
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
-    db = db1.cursor()
+    db = db1.cursor(dictionary=True)
     if user_id is None:
         g.user = None
     else:
