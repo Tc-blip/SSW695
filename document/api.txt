@@ -1,10 +1,22 @@
 method
-Get     http://127.0.0.1:5000/auth_user/                  hello, auth world
-post    http://127.0.0.1:5000/auth_user/login             login successful
-post    http://127.0.0.1:5000/auth_user/logout            log out    
-post    http://127.0.0.1:5000/auth_user/register  
+GET     http://127.0.0.1:5000/auth_user/                  hello, auth world
+POST    http://127.0.0.1:5000/auth_user/login             login successful
+POST    http://127.0.0.1:5000/auth_user/logout            log out    
+POST    http://127.0.0.1:5000/auth_user/register  
 
-Get     http://127.0.0.1:5000/auth_shop_owner/            Hello, owner world!
-post    http://127.0.0.1:5000/auth_shop_owner/login       login successful
-post    http://127.0.0.1:5000/auth_shop_owner/logout      log out    
-post    http://127.0.0.1:5000/auth_shop_owner/register  
+GET     http://127.0.0.1:5000/auth_shop_owner/            Hello, owner world!
+POST    http://127.0.0.1:5000/auth_shop_owner/login       login successful
+POST    http://127.0.0.1:5000/auth_shop_owner/logout      log out    
+POST    http://127.0.0.1:5000/auth_shop_owner/register  
+
+
+GET     http://127.0.0.1:5000/user/get_user_infor           return json   for example{ {"UserID": 123,
+                                                                                        "UserName": tc,
+                                                                                        "CreateTime":,
+                                                                                        "Gender": 2020-03-01,
+                                                                                        "Birthday": 2020-03-01}
+POST    http://127.0.0.1:5000/user/set_user_infor           "change successful" or "error"
+request body = (password, gender, birthday)
+Get     http://127.0.0.1:5000/user/get_user_fav
+POST    http://127.0.0.1:5000/user/set_user_fav
+request body ?

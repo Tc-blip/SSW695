@@ -33,4 +33,7 @@ def create_app(test_config=None):
     from . import auth_shop_owner
     app.register_blueprint(auth_shop_owner.bp)
 
+    from . import user
+    app.register_blueprint(user.bp)
+
     return app
