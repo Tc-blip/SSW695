@@ -2,7 +2,6 @@ package com.example.shoppingexpert;
 
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        GoogleMap.OnMarkerClickListener, Listener{
+        GoogleMap.OnMarkerClickListener{
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
