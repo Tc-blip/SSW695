@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="Buttonw">button1</string>
+    <string name="username">please enter username</string>
+    <string name="password">please enter password</string>
+    <string name="SignInButton">Sign In</string>
+    <string name="SignOutButton">SIgn Out</string>
+    <string name="BussinessButton">For Bussiness</string>
+    <string name="signup_text">Create a new acount</string>
+    <string name="uername">Pick up a username for your acount</string>
+    <string name="SignUpUsername">Pick up a username for your acount</string>
+    <string name="SignUpPassword">Pick up a password for your acount</string>
+    <string name="SignUpGendar">Pick up your gender: M/FM</string>
+    <string name="SignUpBirthday">Enter your birthday, such as: 1995/04/24</string>
+    <string name="FinishButton">Finish</string>
+    <string name="textView">okokok</string>
+    <string name="enter_birthday">enter birthday for regist</string>
+</resources>
