@@ -39,4 +39,7 @@ def create_app(test_config=None):
     from . import shop_owner
     app.register_blueprint(shop_owner.bp)
 
+    from . import shop
+    app.register_blueprint(shop.bp)
+
     return app
