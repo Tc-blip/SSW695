@@ -7,7 +7,7 @@ POST    http://127.0.0.1:5000/auth_user/register
 GET     http://127.0.0.1:5000/auth_shop_owner/            Hello, owner world!
 POST    http://127.0.0.1:5000/auth_shop_owner/login       login successful
 POST    http://127.0.0.1:5000/auth_shop_owner/logout      log out    
-POST    http://127.0.0.1:5000/auth_shop_owner/register  
+POST    http://127.0.0.1:5000/auth_shop_owner/register     username, generate_password_hash(password),gender,birthday
 
 
 GET     http://127.0.0.1:5000/user/get_user_infor           return json   for example{ {"UserID": 123,
@@ -28,3 +28,16 @@ GET     http://127.0.0.1:5000/shop_owner/get_user_infor           return json   
                                                                                         "Gender": 2020-03-01,
                                                                                         "Birthday": 2020-03-01}
 POST    http://127.0.0.1:5000/shop_owner/set_user_infor           "change successful" or "error"
+
+POST    http://127.0.0.1:5000/shop/create_shop                    store_name,store_latitude,store_longitude,store_description
+GET     http://127.0.0.1:5000/shop/get_shop_infor                 return json 
+                                                                    [{
+                                                                        "Id": 2, 
+                                                                        "store_StoreId": 9, 
+                                                                        "storeowner_StoreOwnerId": 1
+                                                                    }, 
+                                                                    {
+                                                                        "Id": 3, 
+                                                                        "store_StoreId": 10, 
+                                                                        "storeowner_StoreOwnerId": 1
+                                                                    }]
