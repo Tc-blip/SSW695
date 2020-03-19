@@ -6,9 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 bp = Blueprint('shop', __name__, url_prefix='/shop')
 
-db1 = mysql.connector.connect(user='root', password='tiancheng',
-                        host='127.0.0.1',
-                        database='mydb')
+from . import db
+db1 = db.connection()
 
 @bp.route('/')
 def hello():
