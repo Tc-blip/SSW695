@@ -1,14 +1,11 @@
-import mysql.connector
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
+from . import db
+db1 = db.connection()
 
 bp = Blueprint('auth', __name__, url_prefix='/auth_user')
-
-db1 = mysql.connector.connect(user='root', password='tiancheng',
-                        host='127.0.0.1',
-                        database='mydb')
 
 @bp.route('/')
 def hello():

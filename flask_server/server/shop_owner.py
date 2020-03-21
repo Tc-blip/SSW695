@@ -5,10 +5,8 @@ from flask import (
 from werkzeug.security import check_password_hash, generate_password_hash
 
 bp = Blueprint('shop_owner', __name__, url_prefix='/shop_owner')
-
-db1 = mysql.connector.connect(user='root', password='tiancheng',
-                        host='127.0.0.1',
-                        database='mydb')
+from . import db
+db1 = db.connection()
 
 @bp.route('/get_shop_owner_infor')
 def get_user_infor():

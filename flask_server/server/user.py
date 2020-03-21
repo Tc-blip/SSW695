@@ -6,9 +6,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
-db1 = mysql.connector.connect(user='root', password='tiancheng',
-                        host='127.0.0.1',
-                        database='mydb')
+from . import db
+db1 = db.connection()
 
 @bp.route('/get_user_infor')
 def get_user_infor():
