@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 bp = Blueprint('auth_shop_owner', __name__,url_prefix='/auth_shop_owner')
 
-db1 = mysql.connector.connect(user='root', password='tiancheng',
+db1 = mysql.connector.connect(user='root', password='asdf1234',
                         host='127.0.0.1',
                         database='mydb')
 

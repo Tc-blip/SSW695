@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void validateUsername(){
         //String usernameContent = username.getText().toString().trim();
-        String value;
-        Map<String, String> map = new HashMap<String, String>();
+        //String value;
+        //Map<String, String> map = new HashMap<String, String>();
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
 
-                        textView.setText("Your inputted username is : " + username.getText().toString().trim()+ "password is " + password.getText().toString().trim());
+                        //textView.setText("Your inputted username is : " + username.getText().toString().trim()+ "password is " + password.getText().toString().trim());
                         //return 0;
                     }
             }
@@ -134,14 +134,14 @@ public class MainActivity extends AppCompatActivity {
 
         FormBody formBody = new FormBody
                 .Builder()
-                .add("username", "okk")
-                .add("password", "12341234")
+                .add("username", username)
+                .add("password", password)
                 .build();
 
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/login")
+                .url("http://10.0.2.2:5000/auth_user/login")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -155,7 +155,22 @@ public class MainActivity extends AppCompatActivity {
 
                 String result = response.body().string();
                 Log.d("androixx.xn", result);
-                response.body().close();
+                //response.body().close();
+
+                textView.setText(result);
+
+                /*if (result == "successful") {
+                    textView.setText("login successful");
+                    //Toast.makeText(MainActivity.this, "登陆成功！！！", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    textView.setText(result);
+                }
+
+                //textView.setText("login successful！！！");*/
+
+
+
             }
         });
 

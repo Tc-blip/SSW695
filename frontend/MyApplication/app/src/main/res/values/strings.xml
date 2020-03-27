@@ -15,4 +15,6 @@
     <string name="FinishButton">Finish</string>
     <string name="textView">okokok</string>
     <string name="enter_birthday">enter birthday for regist</string>
+    <string name="RegisterSuccess">Register Successfully!</string>
+    <string name="Welcome">Welcome!!!</string>
 </resources>

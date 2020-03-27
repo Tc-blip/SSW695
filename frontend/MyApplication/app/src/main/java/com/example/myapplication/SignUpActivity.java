@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -79,6 +80,13 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
 
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                startActivity(intent);
+
+
+
+
+
             }
         });
 
@@ -94,8 +102,8 @@ public class SignUpActivity extends AppCompatActivity {
 
         FormBody formBody = new FormBody
                 .Builder()
-                .add("username", "okk")
-                .add("password", "12341234")
+                .add("username", username)
+                .add("password", password)
                 .add("gender", gender)
                 .add("birthday", birthday)
                 .build();
@@ -103,7 +111,7 @@ public class SignUpActivity extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/register")
+                .url("http://10.0.2.2:5000/auth_user/register")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
