@@ -41,3 +41,24 @@ GET     http://127.0.0.1:5000/shop/get_shop_infor                 return json
                                                                         "store_StoreId": 10, 
                                                                         "storeowner_StoreOwnerId": 1
                                                                     }]
+
+POST    http://127.0.0.1:5000/shop/set_shop_infor                   storename:3/3
+                                                                    latitute:098
+                                                                    longitude:0987
+                                                                    description:wudi's
+                                                                    shop_id:16
+
+POST    http://127.0.0.1:5000/user/set_user_love                    storeid:10   //  if User already favourite current store, unfavourit it, else favourite it
+
+GET     http://127.0.0.1:5000/user/get_user_love                    [
+                                                                        {
+                                                                            "ID": 1,
+                                                                            "store_StoreId": 9,
+                                                                            "user_UserId": 3
+                                                                        },
+                                                                        {
+                                                                            "ID": 3,
+                                                                            "store_StoreId": 10,
+                                                                            "user_UserId": 3
+                                                                        }
+                                                                        ]

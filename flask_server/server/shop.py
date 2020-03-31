@@ -48,3 +48,17 @@ def get_shop_infor():
         )
     return jsonify(db.fetchall())
 
+@bp.route('/set_shop_infor',methods=("GET","POST"))
+def set_shop_infor():
+    if request.method == 'POST':
+        shop_id = request.form['shop_id']
+        store_name = request.form["storename"]
+        store_latitude = request.form["latitute"]
+        store_longitude = request.form['longitude']
+        store_description = request.form['description']
+        db = db1.cursor(dictionary=True)
+        db.execute("UPDATE store SET StoreName=%s,StoreLatitude=%s,StoreLongitude=%s,StoreDescription=%s Where StoreId = %s",
+                  (store_name,store_latitude,store_longitude,store_description,shop_id))
+        db1.commit()
+        return "change successful"
+    return "error"
