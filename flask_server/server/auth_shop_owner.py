@@ -1,19 +1,20 @@
-import mysql.connector
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
-)
-from werkzeug.security import check_password_hash, generate_password_hash
+import functools
+from flask import Blueprint
+from flask import flash
+from flask import g
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import session
+from flask import url_for
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
+
+from server.db import get_db
 
 
-bp = Blueprint('auth_shop_owner', __name__,url_prefix='/auth_shop_owner')
+bp = Blueprint('auth_shop_owner', __name__, url_prefix='/auth_shop_owner')
 
-db1 = mysql.connector.connect(user='root', password='asdf1234',
-                        host='127.0.0.1',
-                        database='mydb')
-
-@bp.route('/')
-def hello():
-    return 'Hello, owner world!'
 
 @bp.route("/register", methods=("GET", "POST"))
 def register():
@@ -26,63 +27,66 @@ def register():
         password = request.form["password"]
         gender = request.form["gender"]
         birthday = request.form['birthday']
-        db = db1.cursor()
-        db.execute("SELECT Username FROM storeowner WHERE Username = %s", (username,))
-        res = db.fetchone()
-        if (res is not None ):
-            return "User {0} is already registered.".format(username)
+        db = get_db()
+        error = None
+        if not username:
+            error = 'Username is required.'
+        elif not password:
+            error = 'Password is required.'
+        elif  db.execute(
+            'SELECT UserId FROM storeowner WHERE username = ?', (username,)
+        ).fetchone() is not None:
+            error = 'User {} is already registered.'.format(username)
 
-        else:
+        if error is None:
             db.execute(
-                "INSERT INTO storeowner (username, password,Gender, Birthday) VALUES (%s, %s,%s,%s)",
-                (username, generate_password_hash(password),gender,birthday),
+                "INSERT INTO storeowner (username, password,Gender, Birthday) VALUES (?,?,?,?)",
+                (username, generate_password_hash(password),gender,birthday)
             )
-            db1.commit()
-
-            return "successful store owner register"
+            db.commit()
+            return redirect(url_for("auth.login"))
+        flash(error)
     else:
-        return "register no Get"
+        return render_template("auth/register.html")
 
 @bp.route("/login", methods=("GET", "POST"))
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = db1.cursor()
+        db = get_db()
 
         error = None
-        db.execute('SELECT * FROM storeowner WHERE Username = %s', (username,))
-        user = db.fetchone()
+        user = db.execute(
+            'SELECT * FROM storeowner WHERE username = ?', (username,)
+        ).fetchone()
 
         if user is None:
             error =  'Incorrect username.'
-        elif not check_password_hash(user[2], password):
+        elif not check_password_hash(user['password'], password):
             error = 'Incorrect password'
 
         if error is None:
             session.clear()
-            session['user_id'] = user[0]     
-        
-            return "login successful"
-        else:
-            return error
-    else:
-        return 'error'
+            session['user_id'] = user['UserId']     
+            return redirect(url_for("index"))
+        flash(error)
+    return render_template("auth/login.html")
 
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
-    db = db1.cursor()
+    db = get_db()
     if user_id is None:
         g.user = None
     else:
-        db.execute(
-            'SELECT * FROM storeowner WHERE StoreOwnerId = %s', (user_id,)
-        )
-        g.user = db.fetchone()
+        g.user = db.execute(
+            'SELECT * FROM storeowner WHERE UserId = ?', (user_id,)
+        ).fetchone()
 
-@bp.route("/logout",methods=("GET", "POST"))
+@bp.route("/logout")
 def logout():
     """Clear the current session, including the stored user id."""
     session.clear()
     return "log out"
+    

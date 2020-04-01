@@ -1,14 +1,9 @@
-import mysql.connector
 from flask import (
     Blueprint, flash, g, redirect, jsonify, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from server.db import get_db
 bp = Blueprint('shop', __name__, url_prefix='/shop')
-
-db1 = mysql.connector.connect(user='root', password='asdf1234',
-                        host='127.0.0.1',
-                        database='mydb')
 
 @bp.route('/')
 def hello():
@@ -22,30 +17,54 @@ def create_shop():
         store_longitude = request.form['longitude']
         store_description = request.form['description']
         print(store_name)
-        db = db1.cursor()
+        db = get_db()
         db.execute(
-            "INSERT INTO store (StoreName, StoreLatitude, StoreLongitude, StoreDescription) VALUES (%s,%s,%s,%s)",
+            "INSERT INTO store (StoreName, StoreLatitude, StoreLongitude, StoreDescription) VALUES (?,?,?,?)",
             (store_name,store_latitude,store_longitude,store_description),
         )
-        db1.commit()
+        db.commit()
 
-        db.execute('SELECT LAST_INSERT_ID()')
-        store_id = db.fetchone()[0]
+        store_id = db.execute('SELECT last_insert_rowid()').fetchone()[0]
         user_id = session.get('user_id')
-        db.execute("INSERT INTO store_has_storeowner (store_storeId,storeowner_StoreOwnerId) VALUES(%s,%s)",
+        db.execute("INSERT INTO store_has_storeowner (StoreId,StoreOwnerId) VALUES(?,?)",
                 (store_id, user_id)
         )
-        db1.commit()
+        db.commit()
         return "create a shop"
 
 @bp.route('/get_shop_infor')
 def get_shop_infor():
-    
-    db = db1.cursor(dictionary=True, buffered=True)
+    db = get_db()
     user_id = session.get('user_id')
-    db.execute(
-        "SELECT * FROM store_has_storeowner WHERE storeowner_StoreOwnerId=%s",
+    
+    def dict_factory(cursor, row):  
+        d = {}  
+        for idx, col in enumerate(cursor.description):  
+            d[col[0]] = row[idx]  
+        return d      
+    db.row_factory = dict_factory
+
+    infor = db.execute(
+        "SELECT * FROM store_has_storeowner WHERE StoreOwnerId=?",
         (user_id,)
-        )
-    return jsonify(db.fetchall())
+        ).fetchall()
+
+    print(infor)
+    
+    return jsonify(infor)
+
+@bp.route('/set_shop_infor',methods=("GET","POST"))
+def set_shop_infor():
+    if request.method == 'POST':
+        shop_id = request.form['shop_id']
+        store_name = request.form["storename"]
+        store_latitude = request.form["latitute"]
+        store_longitude = request.form['longitude']
+        store_description = request.form['description']
+        db = get_db()
+        db.execute("UPDATE store SET StoreName=?,StoreLatitude=?,StoreLongitude=?,StoreDescription=? Where StoreId = ?",
+                  (store_name,store_latitude,store_longitude,store_description,shop_id))
+        db.commit()
+        return "change successful"
+    return "error"
 
