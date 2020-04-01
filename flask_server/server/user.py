@@ -1,27 +1,36 @@
-import mysql.connector
-from flask import (
-    Blueprint, flash, g, redirect, jsonify, request, session, url_for
-)
-from werkzeug.security import check_password_hash, generate_password_hash
-
+import functools
+from flask import Blueprint
+from flask import flash
+from flask import g
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import session
+from flask import url_for
+from flask import jsonify
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
+from server.db import get_db
 bp = Blueprint('user', __name__, url_prefix='/user')
-
-from . import db
-db1 = db.connection()
 
 @bp.route('/get_user_infor')
 def get_user_infor():
-    if g.user:
-        dict = {"UserID": g.user[0],
-                "UserName": g.user[1],
-                "CreateTime":g.user[3],
-                "Gender": g.user[4],
-                "Birthday": g.user[5]}
+    db = get_db()
+    user_id = session.get('user_id')
 
-        return jsonify(dict)
+    def dict_factory(cursor, row):  
+        d = {}  
+        for idx, col in enumerate(cursor.description):  
+            d[col[0]] = row[idx]  
+        return d      
+    db.row_factory = dict_factory
 
-    else:
-        return "error"
+    infor = db.execute(
+        "SELECT * FROM user WHERE UserId=?",
+        (user_id,)
+        ).fetchone()
+    return jsonify(infor)
+   
 
 @bp.route('/set_user_infor',methods=("GET","POST"))
 def set_user_infor():
@@ -30,10 +39,10 @@ def set_user_infor():
         password = request.form["password"]
         gender = request.form["gender"]
         birthday = request.form['birthday']
-        db = db1.cursor(dictionary=True)
-        db.execute("UPDATE user SET password=%s,Gendar=%s,Birthday=%s Where UserID = %s",
+        db = get_db()
+        db.execute("UPDATE user SET password=?,Gendar=?,Birthday=? Where UserID = ?",
                     (generate_password_hash(password),gender,birthday,userid,))
-        db1.commit()
+        db.commit()
         return "change successful"
     
     return "error"
@@ -41,10 +50,16 @@ def set_user_infor():
 @bp.route('/get_user_love')
 def get_user_love():
     user_id = session.get('user_id')
-    db = db1.cursor(dictionary=True)
-    db.execute('SELECT * FROM user_loves_store WHERE user_UserId=%s',
-                (user_id,))
-    res = db.fetchall()
+    db = get_db()
+    res = db.execute('SELECT * FROM user_loves_store WHERE UserId=?',
+                (user_id,)).fetchall()
+    def dict_factory(cursor, row):  
+        d = {}  
+        for idx, col in enumerate(cursor.description):  
+            d[col[0]] = row[idx]  
+        return d      
+    db.row_factory = dict_factory
+
     return jsonify(res)
 
 
@@ -53,23 +68,21 @@ def set_user_love():
     if request.method == 'POST':
         user_id = session.get('user_id')
         store_id = request.form['storeid']
-        db = db1.cursor(dictionary=True)
-        db.execute('SELECT * FROM user_loves_store WHERE user_UserId=%s and store_StoreId=%s',
-        (user_id,store_id,))
-        res = db.fetchone()
-        print(res)
+        db = get_db()
+        
+        res = db.execute('SELECT * FROM user_loves_store WHERE user_UserId=? and store_StoreId=?',
+            (user_id,store_id,)).fetchone()
         if not res:
             db.execute(
-                'INSERT INTO user_loves_store (store_StoreId, user_UserId) VALUES(%s,%s)',
+                'INSERT INTO user_loves_store (store_StoreId, user_UserId) VALUES(?,?)',
                 (store_id, user_id,)
             ) 
-            db1.commit()
+            db.commit()
         else:
             db.execute(
-                'DELETE FROM user_loves_store WHERE ID=%s',
+                'DELETE FROM user_loves_store WHERE ID=?',
                 (res['ID'],)
             ) 
-            db1.commit()
+            db.commit()
         return 'success'
     return 'error'
-            

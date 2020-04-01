@@ -1,12 +1,11 @@
-import mysql.connector
 from flask import (
     Blueprint, flash, g, redirect, jsonify, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from server.db import get_db
 bp = Blueprint('shop_owner', __name__, url_prefix='/shop_owner')
-from . import db
-db1 = db.connection()
+
 
 @bp.route('/get_shop_owner_infor')
 def get_user_infor():
@@ -29,10 +28,12 @@ def set_user_infor():
         password = request.form["password"]
         gender = request.form["gender"]
         birthday = request.form['birthday']
-        db = db1.cursor(dictionary=True)
-        db.execute("UPDATE storeowner SET password=%s,Gender=%s,Birthday=%s Where StoreOwnerId = %s",(generate_password_hash(password),gender,birthday,username,))
-        db1.commit()
+        db = get_db()
+        db.execute(
+                "UPDATE storeowner SET password=?,Gender=?,Birthday=? Where UserId = ?",
+                (generate_password_hash(password),gender,birthday,username,)
+                )
+        db.commit()
         return "change successful"
     
     return "error"
-
