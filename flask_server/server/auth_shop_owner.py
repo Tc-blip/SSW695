@@ -71,7 +71,7 @@ def login():
             session['user_id'] = user['UserId']     
             return 'success'
         return error
-    return render_template("auth/login.html")
+    return 'error'
 
 @bp.before_app_request
 def load_logged_in_user():

@@ -45,13 +45,16 @@ def get_shop_infor():
     db.row_factory = dict_factory
 
     infor = db.execute(
-        "SELECT * FROM store_has_storeowner WHERE StoreOwnerId=?",
+        "select * from store LEFT \
+            JOIN store_has_storeowner on store.StoreId = store_has_storeowner.StoreId \
+            where StoreOwnerId = ?",
         (user_id,)
         ).fetchall()
 
-    print(infor)
+    
     
     return jsonify(infor)
+
 
 @bp.route('/set_shop_infor',methods=("GET","POST"))
 def set_shop_infor():
