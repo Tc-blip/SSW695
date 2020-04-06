@@ -51,8 +51,6 @@ def get_shop_infor():
         (user_id,)
         ).fetchall()
 
-    
-    
     return jsonify(infor)
 
 
