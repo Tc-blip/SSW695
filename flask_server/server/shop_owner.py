@@ -24,7 +24,7 @@ def get_user_infor():
 @bp.route('/set_shop_owner_infor',methods=("GET","POST"))
 def set_user_infor():
     if request.method == 'POST':
-        username = g.user[0]
+        username = session.get('user_id')
         password = request.form["password"]
         gender = request.form["gender"]
         birthday = request.form['birthday']

@@ -17,4 +17,5 @@
     <string name="enter_birthday">enter birthday for regist</string>
     <string name="RegisterSuccess">Register Successfully!</string>
     <string name="Welcome">Welcome!!!</string>
+    <string name="textview">Bussiness Use</string>
 </resources>

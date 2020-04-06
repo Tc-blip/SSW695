@@ -41,7 +41,7 @@ import okhttp3.internal.ws.RealWebSocket;
 public class MainActivity extends AppCompatActivity {
     private EditText username, password;
     private TextView textView;
-    private Button signInButton, signOutButton;
+    private Button signInButton, signOutButton, bussinessButton;
     String code;
 
 
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.SignInButton);
         signOutButton = (Button) findViewById(R.id.SignOutButton);
         textView = (TextView) findViewById(R.id.textView);
+        bussinessButton = (Button) findViewById(R.id.BussinessEntrance);
 
 
         validateUsername();
@@ -71,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         //String usernameContent = username.getText().toString().trim();
         //String value;
         //Map<String, String> map = new HashMap<String, String>();
+        bussinessButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, BussinessMainPage.class);
+                startActivity(intent);
+            }
+        });
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/auth_user/login")
+                .url("http://10.0.2.2:5000/auth/login")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -151,13 +160,25 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
 
-                String result = response.body().string();
+
+
+                final String result = response.body().string();
                 Log.d("androixx.xn", result);
                 //response.body().close();
 
-                textView.setText(result);
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Toast.makeText(MainActivity.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
+                        textView.setText(result);
+                    }
+                });
+
+                //textView.setText(result);
+
+                response.body().close();
 
                 /*if (result == "successful") {
                     textView.setText("login successful");

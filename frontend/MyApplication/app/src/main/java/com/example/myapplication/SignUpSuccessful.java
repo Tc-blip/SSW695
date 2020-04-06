@@ -1,6 +1,9 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -34,6 +37,16 @@ public class SignUpSuccessful extends AppCompatActivity {
         // Get the widgets reference from XML layout
         textView1 = findViewById(R.id.textView2);
         textView2 = findViewById(R.id.textView3);
+
+
+        new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                //实现页面跳转
+                startActivity(new Intent(SignUpSuccessful.this, MainActivity.class));
+                return false;
+            }
+        }).sendEmptyMessageDelayed(0,3000);//表示延迟3秒发送任务
 
 
         //jumpTo();

@@ -8,13 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -22,19 +15,23 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SignUpActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+public class BussinessSignUpActivity extends AppCompatActivity {
 
     private EditText username, password, gender, birthday;
     private TextView textView;
     private Button finishButton;
 
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup_activity);
+        setContentView(R.layout.bussiness_signup_activity);
 
-        // Get the widgets reference from XML layout
         textView = findViewById(R.id.signup_page_text);
         username = findViewById(R.id.username);
         password =  findViewById(R.id.editText5);
@@ -84,9 +81,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
     private void postRequest(String username,String password, String gender, String birthday)  {
@@ -108,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/auth/register")
+                .url("http://10.0.2.2:5000/auth_shop_owner/register")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -124,16 +118,10 @@ public class SignUpActivity extends AppCompatActivity {
                 Log.d("androixx.xn", result);
                 response.body().close();
 
-                Intent intent = new Intent(SignUpActivity.this, SignUpSuccessful.class);
+                Intent intent = new Intent(BussinessSignUpActivity.this, SignUpSuccessful.class);
                 startActivity(intent);
             }
         });
 
     }
-
-
 }
-
-
-
-
