@@ -43,8 +43,9 @@ def register():
                 (username, generate_password_hash(password),gender,birthday)
             )
             db.commit()
-            return redirect(url_for("auth.login"))
-        flash(error)
+            return "success"
+        else:
+            return error
     else:
         return render_template("auth/register.html")
 
@@ -66,8 +67,8 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['UserId'] 
-     
-        flash(error)
+            return 'success'
+        return error
     return render_template("auth/login.html")
 
 @bp.before_app_request
