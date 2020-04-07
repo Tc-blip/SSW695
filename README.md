@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/Tc-blip/SSW695.svg?branch=change_db)]
+![Build Status](https://travis-ci.com/Tc-blip/SSW695.svg?branch=change_db)
 
 Shopping Expert
 ==
