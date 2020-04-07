@@ -18,4 +18,6 @@
     <string name="RegisterSuccess">Register Successfully!</string>
     <string name="Welcome">Welcome!!!</string>
     <string name="textview">Bussiness Use</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_map_page">Map</string>
 </resources>

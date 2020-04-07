@@ -28,6 +28,9 @@ public class BussinessMainPage extends AppCompatActivity {
     private EditText username, password;
     private TextView textView;
     private Button signInButton, signOutButton;
+    public static String usernameContent;
+    public String passwordContent;
+
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -64,8 +67,8 @@ public class BussinessMainPage extends AppCompatActivity {
             //String usernameContent = username.getText().toString().trim();
             @Override
             public void onClick(View v) {
-                String usernameContent = username.getText().toString().trim();
-                String passwordContent = password.getText().toString().trim();
+                usernameContent = username.getText().toString().trim();
+                passwordContent = password.getText().toString().trim();
 
                 if (usernameContent.isEmpty()) {
                     username.setError("User cannnot be null");
