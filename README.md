@@ -1,3 +1,5 @@
+https://travis-ci.com/Tc-blip/SSW695.svg?branch=change_db
+
 Shopping Expert
 ==
 INTRODUCTION
