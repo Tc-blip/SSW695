@@ -36,7 +36,7 @@ def register():
         elif  db.execute(
             'SELECT UserId FROM storeowner WHERE username = ?', (username,)
         ).fetchone() is not None:
-            error = 'User {} is already registered.'.format(username)
+            error = 'already registered.'
 
         if error is None:
             db.execute(
@@ -44,10 +44,10 @@ def register():
                 (username, generate_password_hash(password),gender,birthday)
             )
             db.commit()
-            return 'success'
+            error = "success"
         return error
     else:
-        return render_template("auth/register.html")
+        return 'error'
 
 @bp.route("/login", methods=("GET", "POST"))
 def login():
@@ -69,7 +69,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['UserId']     
-            return 'success'
+            error =  'success'
         return error
     return 'error'
 
