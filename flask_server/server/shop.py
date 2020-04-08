@@ -7,7 +7,7 @@ bp = Blueprint('shop', __name__, url_prefix='/shop')
 
 @bp.route('/')
 def hello():
-    s=['张三','年龄','姓名']
+    s=['aaa','sss','shang']
     return jsonify(s)
     
     #return ["a","b"]

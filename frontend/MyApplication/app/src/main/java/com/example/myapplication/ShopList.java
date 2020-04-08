@@ -89,8 +89,8 @@ public class ShopList extends AppCompatActivity implements AdapterView.OnItemCli
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         //String url = "https://reqres.in/api/users?page=2";
-        //String url ="http://10.0.2.2:5000/shop/";
-        String url = "http://10.0.2.2:5000/shop/get_shop_infor";
+        String url ="http://10.0.2.2:5000/shop/";
+        //String url = "http://10.0.2.2:5000/shop/get_shop_infor";
         //String url = "https://my-json-server.typicode.com/typicode/demo/comments";
         Request request = new Request.Builder()
                 .url(url)

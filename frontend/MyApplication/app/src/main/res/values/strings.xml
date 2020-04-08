@@ -20,4 +20,7 @@
     <string name="textview">Bussiness Use</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_map_page">Map</string>
+    <string name="store_supreme_description">Supreme is an American skateboarding shop and clothing brand established in New York City in April 1994. The brand caters to the skateboarding and hip hop cultures as well as to youth culture in general. ... Its shoes, clothing, and accessories are sold extensively in the secondary market.</string>
+    <string name="supreme_logo">supremem_logo</string>
+    <string name="supreme_introduction_picture1">TODO</string>
 </resources>
