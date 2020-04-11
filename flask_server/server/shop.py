@@ -7,8 +7,7 @@ bp = Blueprint('shop', __name__, url_prefix='/shop')
 
 @bp.route('/')
 def hello():
-    list = [ { "StoreDescription": " 2020-03-01", "StoreId": 14, "StoreLatitude": 123.0, "StoreLongitude": 123.0, "StoreName": "kfc1", "StoreOwnerId": 2, "id": 2 }, { "StoreDescription": " 2020-03-01}", "StoreId": 15, "StoreLatitude": 123.0, "StoreLongitude": 123.0, "StoreName": "kfc2", "StoreOwnerId": 2, "id": 3 }, { "StoreDescription": " 2020-03-01}", "StoreId": 16, "StoreLatitude": 123.0, "StoreLongitude": 123.0, "StoreName": "kfc3", "StoreOwnerId": 2, "id": 4 }, { "StoreDescription": " 2020-03-01}", "StoreId": 17, "StoreLatitude": 123.0, "StoreLongitude": 123.0, "StoreName": "kfc4", "StoreOwnerId": 2, "id": 5 } ]
-    return jsonify(list)
+    return 'hello world'
 
 @bp.route('/create_shop', methods=("GET", "POST"))
 def create_shop():
@@ -17,7 +16,6 @@ def create_shop():
         store_latitude = request.form["latitute"]
         store_longitude = request.form['longitude']
         store_description = request.form['description']
-        print(store_name)
         db = get_db()
         db.execute(
             "INSERT INTO store (StoreName, StoreLatitude, StoreLongitude, StoreDescription) VALUES (?,?,?,?)",
