@@ -4,7 +4,7 @@ from server.db import get_db
 
 
 def test_register(client, app):
-    assert client.get('/auth_shop_owner/register').status_code == 200
+    assert client.get('auth_shop_owner/register').status_code == 200
     response = client.post(
         '/auth_shop_owner/register', data={'username': 'a', 'password': 'a','gender':'','birthday':''}
     )
