@@ -21,6 +21,12 @@ def test_create_shop(client, auth, app):
        
         assert (rv[1],rv[2],rv[3],rv[4]) == ('gucci', 456,678,"right")
         assert (rv2[0],rv2[1]) == (rv[0],2)
+        
+def test_get_shop_infor(client, auth, app):
+    auth.login_shop()
+    assert client.get('shop/get_shop_infor').status_code == 200
+    rv = client.get('shop/get_shop_infor')
+    json_data = rv.get_json()
 
 def test_set_shop_infor(client, auth, app):
     auth.login_shop()
