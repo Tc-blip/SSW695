@@ -26,3 +26,11 @@ def test_register_validate_input(client, username, password, gender, birthday, m
     )
     assert message in response.data
 
+@pytest.mark.parametrize(('username', 'password', 'message'), (
+    ('a', 567, b'Incorrect username.'),
+    ('best', 'a', b'Incorrect password'),
+))
+def test_login_validate_input(auth, username, password, message):
+    response = auth.login_shop(username, password)
+    assert message in response.data
+
