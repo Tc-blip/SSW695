@@ -43,11 +43,10 @@ def register():
                 (username, generate_password_hash(password),gender,birthday)
             )
             db.commit()
-            return "success"
-        else:
-            return error
+            error = "success"
+        return error
     else:
-        return render_template("auth/register.html")
+        return 'error'
 
 @bp.route("/login", methods=("GET", "POST"))
 def login():
@@ -67,9 +66,9 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['UserId'] 
-            return 'success'
+            error =  'success'
         return error
-    return render_template("auth/login.html")
+    return 'error'
 
 @bp.before_app_request
 def load_logged_in_user():

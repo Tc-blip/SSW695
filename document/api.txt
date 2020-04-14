@@ -31,16 +31,25 @@ POST    http://127.0.0.1:5000/shop_owner/set_user_infor           "change succes
 
 POST    http://127.0.0.1:5000/shop/create_shop                    store_name,store_latitude,store_longitude,store_description
 GET     http://127.0.0.1:5000/shop/get_shop_infor                 return json 
-                                                                    [{
-                                                                        "Id": 2, 
-                                                                        "store_StoreId": 9, 
-                                                                        "storeowner_StoreOwnerId": 1
-                                                                    }, 
-                                                                    {
-                                                                        "Id": 3, 
-                                                                        "store_StoreId": 10, 
-                                                                        "storeowner_StoreOwnerId": 1
-                                                                    }]
+[
+{
+    "StoreDescription": " 2020-03-01}",
+    "StoreId": 14,
+    "StoreLatitude": 123.0,
+    "StoreLongitude": 123.0,
+    "StoreName": "kfc1",
+    "StoreOwnerId": 2,
+    "id": 2
+},
+{
+    "StoreDescription": " 2020-03-01}",
+    "StoreId": 15,
+    "StoreLatitude": 123.0,
+    "StoreLongitude": 123.0,
+    "StoreName": "kfc2",
+    "StoreOwnerId": 2,
+    "id": 3
+}]
 
 POST    http://127.0.0.1:5000/shop/set_shop_infor                   storename:3/3
                                                                     latitute:098
