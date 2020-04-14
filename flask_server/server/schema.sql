@@ -35,7 +35,8 @@ CREATE TABLE store(
   StoreName TEXT NOT NULL,
   StoreLatitude REAL NOT NULL,
   StoreLongitude REAL NOT NULL,
-  StoreDescription TEXT
+  StoreDescription TEXT,
+  StoreIcon TEXT
 );
 
 CREATE TABLE user_loves_store(
@@ -43,4 +44,6 @@ CREATE TABLE user_loves_store(
   StoreId INTEGER NOT NULL,
   UserId INTEGER NOT NULL
 )
+
+
 
