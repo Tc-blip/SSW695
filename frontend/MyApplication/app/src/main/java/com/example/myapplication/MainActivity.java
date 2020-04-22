@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/auth/login")
+                .url("http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/auth/login")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
 
                 response.body().close();
 
+                if (result.equals("success")) {
+                    Intent intent = new Intent(MainActivity.this, MapPage.class);
+                    startActivity(intent);
+                }
                 /*if (result == "successful") {
                     textView.setText("login successful");
                     //Toast.makeText(MainActivity.this, "登陆成功！！！", Toast.LENGTH_SHORT).show();

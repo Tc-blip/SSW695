@@ -10,23 +10,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="173dp" />
+        app:layout_constraintGuide_begin="121dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="706dp" />
+        app:layout_constraintGuide_begin="569dp" />
 
     <ListView
         android:id="@+id/listview"
-        android:layout_width="327dp"
-        android:layout_height="416dp"
+        android:layout_width="293dp"
+        android:layout_height="380dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9" />
+        app:layout_constraintTop_toTopOf="@+id/guideline9"
+        app:layout_constraintVertical_bias="0.512" />
 
     <TextView
         android:id="@+id/textView4"
@@ -39,5 +40,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.662" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/LogOut"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline12"
+        app:layout_constraintVertical_bias="0.228" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_shop_button"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.794" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 

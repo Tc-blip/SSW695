@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Geocoder;
 import android.location.Location;
@@ -32,19 +33,25 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.maps.android.heatmaps.Gradient;
+import com.google.maps.android.heatmaps.HeatmapTileProvider;
 
 import android.location.Address;
 import android.view.View;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MapPage extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMarkerClickListener, LocationListener{
 
     private Marker supreme_marker,the_north_face_marker;
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
+    private HeatmapTileProvider mProvider;
     private Location mLastLocation;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int PLACE_PICKER_REQUEST = 3;
@@ -69,6 +76,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                     .addApi(LocationServices.API)
                     .build();
         }
+
     }
 
 
@@ -97,7 +105,68 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setOnMarkerClickListener(this);
+        initMapSettings();
     }
+
+
+    protected void initMapSettings() {
+        ArrayList<LatLng> locations = generateLocations();
+        /*int[] colors = {
+                Color.rgb(102, 225, 0), // green
+                Color.rgb(255, 0, 0),   // red
+
+        };
+
+        float[] startPoints = {
+                0.2f, 1f
+        };
+
+        Gradient gradient = new Gradient(colors, startPoints);*/
+        //gradient(gradient)
+
+        mProvider = new HeatmapTileProvider.Builder().data( locations ).build();
+        mProvider.setRadius( HeatmapTileProvider.DEFAULT_RADIUS );
+        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
+    }
+
+    private ArrayList<LatLng> generateLocations() {
+        ArrayList<LatLng> locations = new ArrayList<LatLng>();
+        double lat;
+        double lng;
+        Random generator = new Random();
+
+        for (int i = 0; i < 75; i++) {
+            lat = generator.nextDouble()/5000;
+            lng = generator.nextDouble()/5000;
+            if (generator.nextBoolean()) {
+                lat = -lat;
+            }
+            if (generator.nextBoolean()) {
+                lng = -lng;
+            }
+
+            locations.add(new LatLng(34.6734287+lat, -82.8378947+lng));
+
+
+        }
+        for (int i = 0; i < 75; i++) {
+            lat = generator.nextDouble()/5000;
+            lng = generator.nextDouble()/4500;
+            if (generator.nextBoolean()) {
+                lat = -lat;
+            }
+            if (generator.nextBoolean()) {
+                lng = -lng;
+            }
+
+
+            locations.add(new LatLng(34.6740704+lat, -82.834768+lng));
+
+        }
+        return locations;
+    }
+
+
 
     private void makeStore(){
 
@@ -107,7 +176,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         Bitmap repare_supreme_logo = temp_supreme.getBitmap();
         Bitmap supreme_logo = Bitmap.createScaledBitmap(repare_supreme_logo, width, height, false);
 
-        LatLng supreme = new LatLng(34.6794255, -82.8378947); //add supremem_clesmon marker
+        LatLng supreme = new LatLng(34.6734245, -82.837897); //add supremem_clesmon marker
         supreme_marker = mMap.addMarker(new MarkerOptions()
                 .position(supreme)
                 .icon(BitmapDescriptorFactory.fromBitmap(supreme_logo))
@@ -118,7 +187,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         Bitmap repare_northface_logo = temp_northface.getBitmap();
         Bitmap northface_logo = Bitmap.createScaledBitmap(repare_northface_logo, 200, 200, false);
 
-        LatLng the_north_face = new LatLng(34.6738600, -82.8317686);
+        LatLng the_north_face = new LatLng(34.6738600, -82.8347696);
         the_north_face_marker = mMap.addMarker(new MarkerOptions()
                 .position(the_north_face)
                 .icon(BitmapDescriptorFactory.fromBitmap(northface_logo))
@@ -214,7 +283,9 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             if (mLastLocation != null) {
                 LatLng currentLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation
                         .getLongitude());
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 14));
+
+
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 17));
 
             }
         }

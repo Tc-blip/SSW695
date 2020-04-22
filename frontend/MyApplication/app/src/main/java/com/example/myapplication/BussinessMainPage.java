@@ -14,11 +14,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,10 +33,32 @@ import okhttp3.Response;
 public class BussinessMainPage extends AppCompatActivity {
 
     private EditText username, password;
-    private TextView textView;
+    private TextView textView, textView6;
     private Button signInButton, signOutButton;
     public static String usernameContent;
     public String passwordContent;
+    public static String bussiness_shop_list;
+
+    static final OkHttpClient okclient = new OkHttpClient.Builder()
+            .cookieJar(new CookieJar() {
+                private HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
+
+                @Override
+                public void saveFromResponse(HttpUrl httpUrl, List<Cookie> list) {
+                    cookieStore.put(httpUrl.host(), list);
+                }
+
+                @Override
+                public List<Cookie> loadForRequest(HttpUrl httpUrl) {
+                    List<Cookie> cookies = cookieStore.get(httpUrl.host());
+                    return cookies != null ? cookies : new ArrayList<Cookie>();
+                }
+            })
+
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(20, TimeUnit.SECONDS)
+            .build();
 
 
     public void onCreate(Bundle savedInstanceState){
@@ -41,6 +70,7 @@ public class BussinessMainPage extends AppCompatActivity {
         signInButton = (Button) findViewById(R.id.SignInButton);
         signOutButton = (Button) findViewById(R.id.SignOutButton);
         textView = (TextView) findViewById(R.id.textView);
+        textView6 = (TextView) findViewById(R.id.textView6);
 
         validateUsername();
 
@@ -99,11 +129,14 @@ public class BussinessMainPage extends AppCompatActivity {
 
     private void postRequest(String username,String password)  {
 
-        OkHttpClient client = new OkHttpClient.Builder()
+
+
+
+        /*OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
-                .build();
+                .build();*/
 
         FormBody formBody = new FormBody
                 .Builder()
@@ -117,7 +150,7 @@ public class BussinessMainPage extends AppCompatActivity {
                 .url("http://10.0.2.2:5000/auth_shop_owner/login")
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
+        okclient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 textView.setText("wuxiao");
@@ -134,8 +167,33 @@ public class BussinessMainPage extends AppCompatActivity {
                     @Override
                     public void run() {
                         //Toast.makeText(BussinessMainPage.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(BussinessMainPage.this, result, Toast.LENGTH_SHORT).show();
-                        //textView.setText(result);
+                        //Toast.makeText(BussinessMainPage.this, okclient.cookieStore().toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(BussinessMainPage.this, okclient.cookieJar().toString(), Toast.LENGTH_SHORT).show();
+                        //textView.setText(okclient.cookieJar().loadForRequest("http://10.0.2.2:5000/auth_shop_owner/login"));
+
+                        String url = "http://10.0.2.2:5000/shop/get_shop_infor";
+                        //String url = "https://my-json-server.typicode.com/typicode/demo/comments";
+                        Request request = new Request.Builder()
+                                .url(url)
+                                .build();
+
+                        okclient.newCall(request).enqueue(new Callback() {
+
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                                e.printStackTrace();
+                                //textView.setText("wudi");
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                                if (response.isSuccessful()){
+                                    final String result = response.body().string();
+                                    bussiness_shop_list = result;
+                                }
+                            }
+                        });
+
                     }
                 });
 
@@ -155,5 +213,10 @@ public class BussinessMainPage extends AppCompatActivity {
             }
         });
 
+
+
+
     }
+
+
 }
