@@ -7,7 +7,7 @@ bp = Blueprint('shop', __name__, url_prefix='/shop')
 
 @bp.route('/')
 def hello():
-    return 'hello world'
+    return 'Hello, owner world!'
 
 @bp.route('/create_shop', methods=("GET", "POST"))
 def create_shop():
@@ -16,6 +16,7 @@ def create_shop():
         store_latitude = request.form["latitute"]
         store_longitude = request.form['longitude']
         store_description = request.form['description']
+        print(store_name)
         db = get_db()
         db.execute(
             "INSERT INTO store (StoreName, StoreLatitude, StoreLongitude, StoreDescription) VALUES (?,?,?,?)",
@@ -50,6 +51,8 @@ def get_shop_infor():
         (user_id,)
         ).fetchall()
 
+    
+    
     return jsonify(infor)
 
 
