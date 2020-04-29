@@ -40,7 +40,7 @@ def set_user_infor():
         gender = request.form["gender"]
         birthday = request.form['birthday']
         db = get_db()
-        db.execute("UPDATE user SET password=?,Gender=?,Birthday=? Where UserID = ?",
+        db.execute("UPDATE user SET password=?,Gendar=?,Birthday=? Where UserID = ?",
                     (generate_password_hash(password),gender,birthday,userid,))
         db.commit()
         return "change successful"
