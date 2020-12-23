@@ -7,10 +7,10 @@ bp = Blueprint('shop', __name__, url_prefix='/shop')
 
 @bp.route('/')
 def hello():
-    #s=['aaa','sss','shang']
-    #return jsonify(s)
+    s=['aaa','sss','shang']
+    return jsonify(s)
     
-    return  request.headers['asfasfsf']
+    #return ["a","b"]
 
 @bp.route('/create_shop', methods=("GET", "POST"))
 def create_shop():

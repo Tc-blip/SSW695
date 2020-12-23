@@ -102,8 +102,7 @@ public class BussinessSignUpActivity extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/auth_shop_owner/register")
-
+                .url("http://10.0.2.2:5000/auth_shop_owner/register")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
