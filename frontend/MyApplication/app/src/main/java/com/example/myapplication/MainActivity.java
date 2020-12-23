@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         signInButton = (Button) findViewById(R.id.SignInButton);
         signOutButton = (Button) findViewById(R.id.SignOutButton);
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView6);
         bussinessButton = (Button) findViewById(R.id.BussinessEntrance);
 
 
@@ -116,17 +116,9 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println("Something wrong");
                         }
 
-
-                        //textView.setText("Your inputted username is : " + username.getText().toString().trim()+ "password is " + password.getText().toString().trim());
-                        //return 0;
                     }
             }
         });
-
-
-
-        //textView.setText("[0] is" + array[0] + ", [1] is " + array[1]);
-
 
     }
 
@@ -171,8 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Toast.makeText(MainActivity.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-                        textView.setText(result);
+                        Toast.makeText(MainActivity.this, String.valueOf(result), Toast.LENGTH_SHORT).show();
+
                     }
                 });
 

@@ -36,4 +36,8 @@
     <string name="ChangeStoreSuccess">Change succesful</string>
     <string name="LogOut">Log out</string>
     <string name="add_shop_button">Add New SHop</string>
+    <string name="signoutvalue">Sign Up</string>
+    <string name="login_value">Log In</string>
+    <string name="warning" />
+    <string name="SignUp">Sign Up</string>
 </resources>

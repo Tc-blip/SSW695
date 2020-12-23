@@ -54,7 +54,6 @@ public class StoreNikeInfo extends AppCompatActivity {
         store_longitude.setText(String.valueOf(default_longitude));
 
         valid_info_change();
-
     }
 
     private void valid_info_change(){
@@ -136,26 +135,20 @@ public class StoreNikeInfo extends AppCompatActivity {
                 final String result = response.body().string();
                 Log.d("androixx.xn", result);
                 //response.body().close();
+                if (result.equals("change successful")){
+                    StoreNikeInfo.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(StoreNikeInfo.this, String.valueOf(result), Toast.LENGTH_SHORT).show();
+                            //textView.setText(result);
 
-                StoreNikeInfo.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(StoreNikeInfo.this, String.valueOf(result), Toast.LENGTH_SHORT).show();
-                        //textView.setText(result);
-
-                        Intent intent = new Intent(StoreNikeInfo.this, ChangeStoreInfoSuccessful.class);
-                        startActivity(intent);
-                    }
-                });
-
-                //textView.setText(result);
+                            Intent intent = new Intent(StoreNikeInfo.this, ChangeStoreInfoSuccessful.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
 
                 response.body().close();
-
-
-
-
-
             }
         });
 

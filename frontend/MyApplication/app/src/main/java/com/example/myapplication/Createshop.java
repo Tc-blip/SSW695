@@ -110,7 +110,7 @@ public class Createshop extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/shop/create_shop")
+                .url("http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/shop/create_shop")
                 .build();
 
         okclient.newCall(request).enqueue(new Callback() {
@@ -133,7 +133,7 @@ public class Createshop extends AppCompatActivity {
                         Toast.makeText(Createshop.this, String.valueOf(result), Toast.LENGTH_SHORT).show();
                         //textView.setText(result);
 
-                        Intent intent = new Intent(Createshop.this, BussinessMainPage.class);
+                        Intent intent = new Intent(Createshop.this, ShopList.class);
                         startActivity(intent);
                     }
                 });

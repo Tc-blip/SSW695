@@ -37,7 +37,7 @@ public class BussinessMainPage extends AppCompatActivity {
     private Button signInButton, signOutButton;
     public static String usernameContent;
     public String passwordContent;
-    public static String bussiness_shop_list;
+    //public static String bussiness_shop_list;
 
     static final OkHttpClient okclient = new OkHttpClient.Builder()
             .cookieJar(new CookieJar() {
@@ -79,9 +79,6 @@ public class BussinessMainPage extends AppCompatActivity {
     }
 
     private void validateUsername(){
-        //String usernameContent = username.getText().toString().trim();
-        //String value;
-        //Map<String, String> map = new HashMap<String, String>();
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +116,6 @@ public class BussinessMainPage extends AppCompatActivity {
                     }
 
 
-                    //textView.setText("Your inputted username is : " + username.getText().toString().trim()+ "password is " + password.getText().toString().trim());
-                    //return 0;
                 }
             }
         });
@@ -147,68 +142,37 @@ public class BussinessMainPage extends AppCompatActivity {
         Request request = new Request
                 .Builder()
                 .post(formBody)
-                .url("http://10.0.2.2:5000/auth_shop_owner/login")
+                .url("http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/auth_shop_owner/login")
                 .build();
 
         okclient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                textView.setText("wuxiao");
+                //textView.setText("wuxiao");
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
 
+
+
                 final String result = response.body().string();
                 Log.d("androixx.xn", result);
-                //response.body().close();
 
                 BussinessMainPage.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Toast.makeText(BussinessMainPage.this, String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(BussinessMainPage.this, okclient.cookieStore().toString(), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(BussinessMainPage.this, okclient.cookieJar().toString(), Toast.LENGTH_SHORT).show();
-                        //textView.setText(okclient.cookieJar().loadForRequest("http://10.0.2.2:5000/auth_shop_owner/login"));
-
-                        String url = "http://10.0.2.2:5000/shop/get_shop_infor";
-                        //String url = "https://my-json-server.typicode.com/typicode/demo/comments";
-                        Request request = new Request.Builder()
-                                .url(url)
-                                .build();
-
-                        okclient.newCall(request).enqueue(new Callback() {
-
-                            @Override
-                            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                                e.printStackTrace();
-                                //textView.setText("wudi");
-                            }
-
-                            @Override
-                            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
-                                if (response.isSuccessful()){
-                                    final String result = response.body().string();
-                                    bussiness_shop_list = result;
-                                }
-                            }
-                        });
-
+                        Toast.makeText(BussinessMainPage.this, String.valueOf(result), Toast.LENGTH_SHORT).show();
+                        //textView6.setText(result);
                     }
                 });
 
-                //textView.setText(result);
-
-                response.body().close();
+                //response.body().close();
 
                 if (result.equals("success")) {
                     Intent intent = new Intent(BussinessMainPage.this, ShopList.class);
                     startActivity(intent);
                 }
-
-                //textView.setText("login successful！！！");*/
-
-
 
             }
         });

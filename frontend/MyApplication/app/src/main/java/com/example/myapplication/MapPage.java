@@ -145,7 +145,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
                 lng = -lng;
             }
 
-            locations.add(new LatLng(34.6734287+lat, -82.8378947+lng));
+            locations.add(new LatLng(34.695765+lat, -82.803475+lng));
 
 
         }
@@ -160,7 +160,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
             }
 
 
-            locations.add(new LatLng(34.6740704+lat, -82.834768+lng));
+            locations.add(new LatLng(34.695695+lat, -82.801743+lng));
 
         }
         return locations;
@@ -176,7 +176,7 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         Bitmap repare_supreme_logo = temp_supreme.getBitmap();
         Bitmap supreme_logo = Bitmap.createScaledBitmap(repare_supreme_logo, width, height, false);
 
-        LatLng supreme = new LatLng(34.6734245, -82.837897); //add supremem_clesmon marker
+        LatLng supreme = new LatLng(34.695769, -82.803475); //add supremem_clesmon marker
         supreme_marker = mMap.addMarker(new MarkerOptions()
                 .position(supreme)
                 .icon(BitmapDescriptorFactory.fromBitmap(supreme_logo))
@@ -187,14 +187,13 @@ public class MapPage extends FragmentActivity implements OnMapReadyCallback, Goo
         Bitmap repare_northface_logo = temp_northface.getBitmap();
         Bitmap northface_logo = Bitmap.createScaledBitmap(repare_northface_logo, 200, 200, false);
 
-        LatLng the_north_face = new LatLng(34.6738600, -82.8347696);
+        LatLng the_north_face = new LatLng(34.695495, -82.801743);
+
         the_north_face_marker = mMap.addMarker(new MarkerOptions()
                 .position(the_north_face)
                 .icon(BitmapDescriptorFactory.fromBitmap(northface_logo))
                 .draggable(true)
         );
-
-
 
     }
 

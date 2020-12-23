@@ -54,23 +54,26 @@ public class ShopList extends AppCompatActivity implements AdapterView.OnItemCli
     private Button logOutButton, addNewShop;
     // 模拟数据
     private List<String> dataList = null;
-    public String store_things;
-
-    static String jsonStr = BussinessMainPage.bussiness_shop_list;
-    static Gson gson = new Gson();
-    static List<StoreInfo> storelist = gson.fromJson(jsonStr, new TypeToken<List<StoreInfo>>(){}.getType());
+    static String bussiness_shop_list;
+    static List<StoreInfo> storelist;
     static int store_num = -1;
+
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shop_list);
         listview = (ListView) findViewById(R.id.listview);
-        textView = findViewById(R.id.textView4);
+        //textView = findViewById(R.id.textView4);
         logOutButton = (Button) findViewById(R.id.button3);
         addNewShop = (Button) findViewById(R.id.button4);
         dataList = new ArrayList<String>();
-        add_list();
+
+
+        read_shop_list();
+
 
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +95,9 @@ public class ShopList extends AppCompatActivity implements AdapterView.OnItemCli
             }
         });
 
+    }
+
+    private void show_listview(){
         ListAdapter adapter = new ArrayAdapter<String>(ShopList.this,
                 android.R.layout.simple_list_item_1, dataList);
         // 获得ListActivity中的listview控件，注意布局文件中listview的id必须是android:id="@android:id/list"
@@ -100,11 +106,52 @@ public class ShopList extends AppCompatActivity implements AdapterView.OnItemCli
         // 绑定item点击事件
         listview.setOnItemClickListener(this);
 
+    }
+
+    private void read_shop_list(){
+
+
+        String url = "http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/shop/get_shop_infor";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        okclient.newCall(request).enqueue(new Callback() {
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                e.printStackTrace();
+                //textView.setText("wudi");
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                if (response.isSuccessful()){
+                    final String result = response.body().string();
+                    //String jsonStr = bussiness_shop_list;
+                    Gson gson = new Gson();
+                    storelist = gson.fromJson(result, new TypeToken<List<StoreInfo>>(){}.getType());
+                    int size = storelist.size();   //add data to list view
+                    //int size = 3;   //add data to list view
+                    for (int i = 0; i < size; i++) {
+                        dataList.add(storelist.get(i).StoreName);
+                    }
+
+                    ShopList.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            show_listview();
+                        }
+                    });
+                }
+            }
+        });
 
 
 
     }
-    
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,26 +165,36 @@ public class ShopList extends AppCompatActivity implements AdapterView.OnItemCli
     }
 
 
-    private void add_list(){
+
+    private void add_list(String bussiness_shop_list){
 
 
-        int size = storelist.size();   //add data to list view
-        for (int i = 0; i < size; i++){
-            dataList.add(storelist.get(i).StoreName);
+        String jsonStr = bussiness_shop_list;
+        Gson gson = new Gson();
+        storelist = gson.fromJson(jsonStr, new TypeToken<List<StoreInfo>>(){}.getType());
+
+        if (storelist == null) {
+
+            textView.setText("没有");
         }
+        else{
+            int size = storelist.size();   //add data to list view
+            //int size = 3;   //add data to list view
+            for (int i = 0; i < size; i++){
+                dataList.add(storelist.get(i).StoreName);
+            }
+        }
+        textView.setText(jsonStr);
+
 
 
 
     }
 
-    private void add_store(){
 
-
-
-    }
     private void log_out(){
 
-        String url = "http://10.0.2.2:5000/auth_shop_owner/logout";
+        String url = "http://flasktest-env.eba-ph7fbvid.us-east-1.elasticbeanstalk.com/auth_shop_owner/logout";
 
 
         Request request = new Request.Builder()
